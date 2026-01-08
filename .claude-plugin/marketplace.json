@@ -1,0 +1,26 @@
+{
+  "name": "daydreams-skills",
+  "owner": {
+    "name": "Daydreams AI",
+    "email": "ponderingdemocritus@protonmail.com"
+  },
+  "metadata": {
+    "description": "Claude Code skills for working with Daydreams AI infrastructure",
+    "version": "1.0.0",
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "xgate-server",
+      "source": "./xgate-server",
+      "description": "Query xgate-server API for X402 services, ERC-8004 agents, and on-chain token transfers",
+      "version": "1.0.0",
+      "author": {
+        "name": "Daydreams AI"
+      },
+      "keywords": ["xgate", "x402", "erc-8004", "agents", "blockchain", "api"],
+      "category": "api-tools",
+      "license": "MIT"
+    }
+  ]
+}
