@@ -14,6 +14,8 @@ Then install the plugins you want:
 
 ```bash
 /plugin install xgate-server@daydreams-skills
+/plugin install lucid-agents-sdk@daydreams-skills
+/plugin install lucid-client-api@daydreams-skills
 ```
 
 ## Available Plugins
@@ -45,6 +47,53 @@ xgate transfers -c 8453 --totals
 export XGATE_URL=https://xgate.run  # or http://localhost:9000
 ```
 
+### lucid-agents-sdk
+
+Comprehensive skill for working with the Lucid Agents SDK - a TypeScript framework for building and monetizing AI agents.
+
+**Features:**
+- Building agents with extensions (http, payments, identity, a2a, etc.)
+- Using adapters (Hono, Express, TanStack)
+- Payment networks (EVM and Solana)
+- Code structure principles
+- Common development tasks and patterns
+
+**Usage:**
+Automatically activates when:
+- Building or modifying Lucid Agents projects
+- Working with agent entrypoints, payments, identity, or A2A communication
+- Developing in the lucid-agents monorepo
+- Questions about the Lucid Agents architecture
+
+**Resources:**
+- [Lucid Agents Repository](https://github.com/daydreamsai/lucid-agents)
+- [AGENTS.md Guide](https://github.com/daydreamsai/lucid-agents/blob/master/AGENTS.md)
+- [ERC-8004 Specification](https://eips.ethereum.org/EIPS/eip-8004)
+- [x402 Protocol](https://github.com/paywithx402)
+
+### lucid-client-api
+
+Skill for interacting with the Lucid Client API - a multi-agent runtime system.
+
+**Features:**
+- Agent management endpoints (create, update, delete, list)
+- Entrypoint invocation with payment handling
+- Payment handling (x402 protocol)
+- Secrets management
+- Analytics and rankings
+- OpenAPI documentation access
+
+**Usage:**
+Automatically activates when:
+- Interacting with the Lucid Client API
+- Managing agents programmatically
+- Invoking agent entrypoints
+- Working with the multi-agent runtime
+
+**Resources:**
+- [Lucid Client Repository](https://github.com/daydreamsai/lucid-client)
+- [API Documentation](https://github.com/daydreamsai/lucid-client/blob/master/AGENTS.md)
+
 ## Development
 
 ### Repository Structure
@@ -52,15 +101,25 @@ export XGATE_URL=https://xgate.run  # or http://localhost:9000
 ```
 skills-market/
 ├── .claude-plugin/
-│   └── marketplace.json       # Marketplace catalog
+│   └── marketplace.json          # Marketplace catalog
 ├── plugins/
-│   └── xgate-server/
+│   ├── xgate-server/
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json       # Plugin manifest
+│   │   ├── skills/
+│   │   │   └── xgate-server.md
+│   │   └── scripts/
+│   │       └── xgate             # CLI tool
+│   ├── lucid-agents-sdk/
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   └── skills/
+│   │       └── SKILL.md
+│   └── lucid-client-api/
 │       ├── .claude-plugin/
-│       │   └── plugin.json    # Plugin manifest
-│       ├── skills/
-│       │   └── xgate-server.md
-│       └── scripts/
-│           └── xgate          # CLI tool
+│       │   └── plugin.json
+│       └── skills/
+│           └── SKILL.md
 └── README.md
 ```
 

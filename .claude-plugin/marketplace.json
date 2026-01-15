@@ -21,6 +21,30 @@
       "keywords": ["xgate", "x402", "erc-8004", "agents", "blockchain", "api"],
       "category": "api-tools",
       "license": "MIT"
+    },
+    {
+      "name": "lucid-agents-sdk",
+      "source": "./lucid-agents-sdk",
+      "description": "Skill for working with the Lucid Agents SDK - a TypeScript framework for building and monetizing AI agents",
+      "version": "1.0.0",
+      "author": {
+        "name": "Daydreams AI"
+      },
+      "keywords": ["lucid-agents", "sdk", "agents", "typescript", "ai", "payments", "identity", "a2a"],
+      "category": "sdk",
+      "license": "MIT"
+    },
+    {
+      "name": "lucid-client-api",
+      "source": "./lucid-client-api",
+      "description": "Skill for interacting with the Lucid Client API (multi-agent runtime) - manage agents, invoke entrypoints, handle payments",
+      "version": "1.0.0",
+      "author": {
+        "name": "Daydreams AI"
+      },
+      "keywords": ["lucid-client", "api", "runtime", "agents", "multi-agent"],
+      "category": "api-tools",
+      "license": "MIT"
     }
   ]
 }
