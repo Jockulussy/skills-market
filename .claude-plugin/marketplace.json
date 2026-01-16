@@ -12,7 +12,7 @@
   "plugins": [
     {
       "name": "xgate-server",
-      "source": "./xgate-server",
+      "source": "./plugins/xgate-server",
       "description": "Query xgate-server API for X402 services, ERC-8004 agents, and on-chain token transfers",
       "version": "1.0.0",
       "author": {
@@ -24,7 +24,7 @@
     },
     {
       "name": "lucid-agents-sdk",
-      "source": "./lucid-agents-sdk",
+      "source": "./plugins/lucid-agents-sdk",
       "description": "Skill for working with the Lucid Agents SDK - a TypeScript framework for building and monetizing AI agents",
       "version": "1.0.0",
       "author": {
@@ -36,7 +36,7 @@
     },
     {
       "name": "lucid-client-api",
-      "source": "./lucid-client-api",
+      "source": "./plugins/lucid-client-api",
       "description": "Skill for interacting with the Lucid Client API (multi-agent runtime) - manage agents, invoke entrypoints, handle payments",
       "version": "1.0.0",
       "author": {
