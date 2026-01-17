@@ -45,6 +45,18 @@
       "keywords": ["lucid-client", "api", "runtime", "agents", "multi-agent"],
       "category": "api-tools",
       "license": "MIT"
+    },
+    {
+      "name": "paid-agent",
+      "source": "./plugins/paid-agent",
+      "description": "End-to-end Lucid Agent creation, testing, and deployment pipeline with Ralph Wiggum, code review, and automated publishing",
+      "version": "1.0.0",
+      "author": {
+        "name": "Daydreams AI"
+      },
+      "keywords": ["lucid-agents", "deployment", "ralph-wiggum", "code-review", "testing", "railway", "github"],
+      "category": "development",
+      "license": "MIT"
     }
   ]
 }
