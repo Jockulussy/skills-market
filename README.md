@@ -136,15 +136,21 @@ skills-market/
 │       │   ├── lucid-client-api.md
 │       │   ├── paid-agent.md
 │       │   └── autonomous-lucid.md
-│       ├── skills/
-│       │   ├── xgate-server.md
-│       │   ├── lucid-agents-sdk.md
-│       │   ├── lucid-client-api.md
-│       │   ├── paid-agent.md
-│       │   ├── autonomous-lucid.md
-│       │   └── ARCHITECTURE.md
-│       └── scripts/
-│           └── xgate
+│       └── skills/
+│           ├── xgate-server/
+│           │   ├── SKILL.md
+│           │   └── scripts/
+│           │       └── xgate
+│           ├── lucid-agents-sdk/
+│           │   └── SKILL.md
+│           ├── lucid-client-api/
+│           │   └── SKILL.md
+│           ├── paid-agent/
+│           │   └── SKILL.md
+│           └── autonomous-lucid/
+│               ├── SKILL.md
+│               └── references/
+│                   └── ARCHITECTURE.md
 └── README.md
 ```
 
