@@ -1,5 +1,5 @@
 ---
-name: lucid-js-handlers
+name: lucid-agent-creator
 description: |
   Skill for creating Lucid agents with JavaScript handler code.
   Teaches the JS handler code contract, paymentsConfig for paid agents,
@@ -12,7 +12,7 @@ see-also:
   - ./GUIDE.md: Guide for humans and agents (grok-the-flow)
 ---
 
-# Lucid JS Handlers + Create Agent
+# Creating agents with agents
 
 This skill teaches you how to create Lucid agents with JavaScript handler code using the `create_lucid_agent` MCP tool.
 

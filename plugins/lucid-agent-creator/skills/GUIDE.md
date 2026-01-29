@@ -29,7 +29,7 @@ Add the xgate MCP server to your AI client's MCP config. You get the **MCP URL**
 
 ### 3. Install the Skill
 
-Install the **lucid-js-handlers** skill plugin (from skills-market). The skill teaches the agent:
+Install the **lucid-agent-creator** skill plugin (from skills-market). The skill teaches the agent:
 - The JS handler code contract (what to write, scope, return value, default timeout, `allowedHosts`)
 - How to use the `create_lucid_agent` MCP tool
 - PaymentsConfig requirements for paid agents
@@ -58,7 +58,7 @@ Plus the rest of the agent object (`name`, `description`, `entrypoints`, etc.). 
 
 ## Summary
 
-**User** → configures xgate MCP (SIWE → server wallet) → installs lucid-js-handlers skill → prompts agent to create an agent → agent uses skill + `create_lucid_agent` → **working agent on platform**
+**User** → configures xgate MCP (SIWE → server wallet) → installs lucid-agent-creator skill → prompts agent to create an agent → agent uses skill + `create_lucid_agent` → **working agent on platform**
 
 ## Notes
 
