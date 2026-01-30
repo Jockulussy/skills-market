@@ -1,28 +1,40 @@
 # Skills Market Guidelines
 
+Skills for building paid Lucid Agents with x402.
+
+## Skill Format
+
+Every skill needs a `SKILL.md` with:
+
+1. **YAML frontmatter** (between `---` markers) — name and description
+2. **Markdown content** — instructions Claude follows when invoked
+
+```yaml
+---
+name: my-skill
+description: One-line description. Use when [trigger conditions].
+---
+
+Instructions go here...
+```
+
+The `name` becomes the `/slash-command`. The `description` helps Claude decide when to load it automatically.
+
+## Structure
+
+```
+plugins/<skill-name>/
+├── .claude-plugin/plugin.json    # Plugin manifest
+└── skills/SKILL.md               # Skill instructions
+```
+
 ## Goals
 
-1. **Build paid agents** — Every skill should help create monetizable Lucid Agents
+1. **Build paid agents** — Every skill helps create monetizable Lucid Agents
 2. **Be concise** — Only include what agents don't already know
-3. **No repetition** — Don't explain CLI basics, common patterns, or standard tooling
-4. **Composable** — Skills should work standalone or together
-5. **Real data only** — No hardcoded mocks; agents must fetch live data
-
-## Skill Requirements
-
-### Must Have
-- YAML frontmatter with `name` and `description`
-- `.claude-plugin/plugin.json` manifest
-- Focus on Lucid Agents ecosystem (x402, ERC-8004)
-- Zod v4 for schemas (not v3)
-- Modern imports: `@lucid-agents/core`, `@lucid-agents/http`, etc.
-
-### Must NOT Have
-- CLI usage basics (`curl`, `git`, `npm` commands everyone knows)
-- Obvious programming patterns
-- Verbose explanations of common concepts
-- Hardcoded/mock data examples
-- Outdated SDK patterns (monolithic imports, `agent.listen()`)
+3. **No repetition** — Don't explain CLI basics or common patterns
+4. **Composable** — Skills work standalone or together
+5. **Real data only** — No hardcoded mocks
 
 ## Quality Bar
 
@@ -37,18 +49,27 @@
 ✅ Good: Lucid-specific: addEntrypoint, paymentsFromEnv, price config
 ```
 
-## PR Review Criteria
+## Must Have
+- YAML frontmatter with `name` and `description`
+- Focus on Lucid Agents ecosystem (x402, ERC-8004)
+- Zod v4 for schemas (not v3)
+- Modern imports: `@lucid-agents/core`, `@lucid-agents/http`, etc.
 
-- [ ] Has required files (plugin.json, SKILL.md)
-- [ ] YAML frontmatter present
+## Must NOT Have
+- CLI usage basics everyone knows
+- Verbose explanations of common concepts
+- Hardcoded/mock data examples
+- Outdated SDK patterns
+
+## PR Review
+
+PRs are auto-reviewed against:
+- [ ] Has SKILL.md with frontmatter
+- [ ] Has plugin.json manifest
 - [ ] Uses Zod v4, modern SDK imports
-- [ ] No bloat (CLI basics, obvious patterns)
+- [ ] No bloat
 - [ ] Adds value for paid agent creation
 
-## Structure
+## Reference
 
-```
-plugins/<skill-name>/
-├── .claude-plugin/plugin.json
-└── skills/SKILL.md
-```
+[Agent Skills Standard](https://agentskills.io) | [Claude Code Docs](https://code.claude.com/docs/llms.txt)
