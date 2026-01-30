@@ -4,31 +4,79 @@ Skills for building paid Lucid Agents with x402.
 
 ## Skill Format
 
-Every skill needs a `SKILL.md` with:
-
-1. **YAML frontmatter** (between `---` markers) — name and description
-2. **Markdown content** — instructions Claude follows when invoked
+Every skill needs `SKILL.md` with YAML frontmatter and markdown instructions:
 
 ```yaml
 ---
 name: my-skill
-description: One-line description. Use when [trigger conditions].
+description: What this does. Use when [trigger conditions].
 ---
 
-Instructions go here...
+Instructions Claude follows when invoked...
 ```
 
-The `name` becomes the `/slash-command`. The `description` helps Claude decide when to load it automatically.
+- `name` → becomes `/slash-command`
+- `description` → helps Claude decide when to auto-load
+
+## Frontmatter Reference
+
+| Field | Description |
+|:------|:------------|
+| `name` | Lowercase, hyphens only (max 64 chars). Default: directory name |
+| `description` | What it does and when to use it |
+| `disable-model-invocation` | `true` = only user can invoke |
+| `user-invocable` | `false` = hidden from / menu |
+| `allowed-tools` | Tools Claude can use without asking |
+| `context` | `fork` to run in subagent |
+| `agent` | Subagent type when `context: fork` |
 
 ## Structure
 
 ```
 plugins/<skill-name>/
-├── .claude-plugin/plugin.json    # Plugin manifest
-└── skills/SKILL.md               # Skill instructions
+├── .claude-plugin/plugin.json
+└── skills/
+    ├── SKILL.md          # Required - main instructions
+    ├── template.md       # Optional - templates
+    ├── examples/         # Optional - example outputs
+    └── scripts/          # Optional - executable scripts
 ```
 
-## Goals
+Keep SKILL.md under 500 lines. Move detailed reference to separate files.
+
+## Dynamic Context
+
+Use `!`command`` to inject live data:
+
+```yaml
+---
+name: pr-summary
+context: fork
+---
+PR diff: !`gh pr diff`
+Changed files: !`gh pr diff --name-only`
+
+Summarize this pull request...
+```
+
+Commands run before Claude sees the prompt.
+
+## Arguments
+
+Use `$ARGUMENTS` or `$0`, `$1`, etc:
+
+```yaml
+---
+name: fix-issue
+---
+Fix GitHub issue $ARGUMENTS following our standards.
+```
+
+`/fix-issue 123` → "Fix GitHub issue 123..."
+
+---
+
+## Market-Specific Goals
 
 1. **Build paid agents** — Every skill helps create monetizable Lucid Agents
 2. **Be concise** — Only include what agents don't already know
@@ -44,26 +92,24 @@ plugins/<skill-name>/
 
 ❌ Bad:  50 lines explaining how fetch() works
 ✅ Good: API endpoint table with tested URLs
-
-❌ Bad:  Generic TypeScript patterns
-✅ Good: Lucid-specific: addEntrypoint, paymentsFromEnv, price config
 ```
 
 ## Must Have
+
 - YAML frontmatter with `name` and `description`
-- Focus on Lucid Agents ecosystem (x402, ERC-8004)
-- Zod v4 for schemas (not v3)
-- Modern imports: `@lucid-agents/core`, `@lucid-agents/http`, etc.
+- Focus on Lucid Agents (x402, ERC-8004)
+- Zod v4 (not v3)
+- Modern imports: `@lucid-agents/core`, `@lucid-agents/http`
 
 ## Must NOT Have
-- CLI usage basics everyone knows
+
+- CLI basics everyone knows
 - Verbose explanations of common concepts
-- Hardcoded/mock data examples
-- Outdated SDK patterns
+- Hardcoded/mock data
+- Outdated SDK patterns (`agent.listen()`, monolithic imports)
 
-## PR Review
+## PR Review Criteria
 
-PRs are auto-reviewed against:
 - [ ] Has SKILL.md with frontmatter
 - [ ] Has plugin.json manifest
 - [ ] Uses Zod v4, modern SDK imports
@@ -72,4 +118,5 @@ PRs are auto-reviewed against:
 
 ## Reference
 
-[Agent Skills Standard](https://agentskills.io) | [Claude Code Docs](https://code.claude.com/docs/llms.txt)
+- [Agent Skills Standard](https://agentskills.io)
+- [Claude Code Docs](https://code.claude.com/docs/llms.txt)
