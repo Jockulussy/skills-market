@@ -116,6 +116,14 @@ Fix GitHub issue $ARGUMENTS following our standards.
 - [ ] No bloat
 - [ ] Adds value for paid agent creation
 
+## Troubleshooting
+
+| Problem | Fix |
+|:--------|:----|
+| Skill not triggering | Make description match natural phrases; check `/context` |
+| Triggers too often | Make description more specific; add `disable-model-invocation: true` |
+| Claude doesn't see skill | Too many skills exceed 15K char budget; increase `SLASH_COMMAND_TOOL_CHAR_BUDGET` |
+
 ## Reference
 
 - [Agent Skills Standard](https://agentskills.io)
