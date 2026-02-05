@@ -55,12 +55,13 @@ Skills for building paid Lucid Agents with x402.
 | `railway-deploy` | Deploy to Railway |
 | `agent-factory` | Meta: orchestrates above |
 
-### SDK & Infrastructure  
+### SDK & Infrastructure
 | Skill | Purpose |
 |-------|---------|
 | `lucid-agents-sdk` | SDK patterns & extensions |
 | `lucid-client-api` | Multi-agent runtime API |
 | `lucid-agent-creator` | Inline JS handlers |
+| `lucid-agent-editor` | Edit agents via API |
 | `xgate-server` | x402 service registry |
 
 ### Automation

@@ -2,23 +2,138 @@
 name: lucid-agent-creator
 description: |
   Skill for creating Lucid agents with JavaScript handler code.
-  Teaches the JS handler code contract, paymentsConfig for paid agents,
-  optional identityConfig (ERC-8004), and how to use the create_lucid_agent MCP tool.
+  Shows three options: MCP tool with SIWE, SDK with your wallet, or viem with custom signing.
+  Teaches JS handler code contract, paymentsConfig, and identityConfig.
 
   Activate when: user wants to create Lucid agents with inline JS handlers
   (no generate API, no self-hosting). The agent will be hosted on the Lucid platform.
 
 see-also:
   - ./GUIDE.md: Guide for humans and agents (grok-the-flow)
+  - lucid-agent-editor: For editing existing agents
 ---
 
-# Creating agents with agents
+# Creating Agents with Agents
 
-This skill teaches you how to create Lucid agents with JavaScript handler code using the `create_lucid_agent` MCP tool.
+This skill teaches you how to create Lucid agents with JavaScript handler code.
 
 ## When to Use
 
-Use this skill when the user wants to create Lucid agents with inline JavaScript handlers. The agents will be hosted on the Lucid platform and can be invoked immediately after creation. There is no generate API - you write the JS handler code yourself. There is no self-hosting required - agents are hosted on the Lucid platform.
+Use this skill when creating Lucid agents with inline JavaScript handlers. Agents are hosted on the Lucid platform and can be invoked immediately after creation. No generate API - you write the JS handler code yourself. No self-hosting required.
+
+## Three Options for Creating Agents
+
+### Option 1: MCP Tool with Server Wallet (SIWE)
+
+Use the `create_lucid_agent` MCP tool with Sign In With Ethereum (SIWE):
+
+```bash
+# First, ensure you're authenticated via SIWE in your MCP client
+# Your server wallet will be used for setup payment and authentication
+
+# Then use the MCP tool
+create_lucid_agent({
+  slug: "my-agent",
+  name: "My Agent",
+  description: "Agent description",
+  entrypoints: [{
+    key: "chat",
+    description: "Chat endpoint",
+    handlerType: "js",
+    handlerConfig: {
+      code: "return { message: 'Hello from ' + input.name };"
+    },
+    price: "10000" // 0.01 USDC
+  }]
+})
+```
+
+The MCP tool automatically handles:
+- Setup payment (if agent has paid entrypoints)
+- SIWE authentication with your server wallet
+- x402 payment signature generation
+- Agent creation with PAYMENT-SIGNATURE header
+
+### Option 2: SDK as Signer (Your Own Wallet)
+
+Use the Lucid Agents SDK with your own wallet:
+
+```typescript
+import { createX402Payment } from '@lucid-agents/payments';
+import { privateKeyToAccount } from 'viem/accounts';
+import { baseSepolia } from 'viem/chains';
+
+const account = privateKeyToAccount(`0x${WALLET_PRIVATE_KEY}`);
+
+// Step 1: Setup payment (for paid agents)
+const setupPayment = await createX402Payment({
+  account,
+  chain: baseSepolia,
+  resource: {
+    url: 'https://api.daydreams.systems/api/agents/setup-payment',
+    description: 'Agent setup payment',
+    mimeType: 'application/json',
+  },
+  amount: '10000', // 0.01 USDC setup fee
+  asset: '0x036CbD53842c5426634e7929541eC2318f3dCF7e', // USDC
+  payTo: '0xPlatformWallet', // Platform wallet
+});
+
+await fetch('https://api.daydreams.systems/api/agents/setup-payment', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'PAYMENT-SIGNATURE': btoa(JSON.stringify(setupPayment)),
+  },
+  body: JSON.stringify({
+    slug: 'my-agent',
+    network: 'eip155:84532',
+    facilitatorUrl: 'https://facilitator.daydreams.systems',
+  }),
+});
+
+// Step 2: Create agent with wallet auth
+const createPayment = await createX402Payment({
+  account,
+  chain: baseSepolia,
+  resource: {
+    url: 'https://api.daydreams.systems/api/agents',
+    description: 'Agent creation',
+    mimeType: 'application/json',
+  },
+  amount: '0', // Free for auth
+  asset: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
+  payTo: account.address,
+});
+
+const response = await fetch('https://api.daydreams.systems/api/agents', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'PAYMENT-SIGNATURE': btoa(JSON.stringify(createPayment)),
+  },
+  body: JSON.stringify({
+    slug: 'my-agent',
+    name: 'My Agent',
+    description: 'Agent description',
+    entrypoints: [{
+      key: 'chat',
+      description: 'Chat endpoint',
+      handlerType: 'js',
+      handlerConfig: {
+        code: "return { message: 'Hello from ' + input.name };",
+      },
+      price: '10000',
+    }],
+  }),
+});
+
+const agent = await response.json();
+```
+
+### Option 3: Viem with Custom Signing
+
+Write your own signing logic using viem directly. See `scripts/create-agent-with-payment-auth.ts` and `scripts/test-setup-payment-x402.ts` in the lucid-client repo for complete examples.
 
 ## JS Handler Code Contract
 

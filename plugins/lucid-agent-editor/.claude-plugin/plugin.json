@@ -1,0 +1,25 @@
+{
+  "name": "lucid-agent-editor",
+  "description": "Skill for editing and managing existing Lucid agents via the API. Covers authentication methods (wallet auth via PAYMENT-SIGNATURE and session auth), what fields can be updated, and examples for common operations.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Daydreams AI",
+    "email": "ponderingdemocritus@protonmail.com"
+  },
+  "homepage": "https://github.com/daydreamsai/skills-market",
+  "repository": "https://github.com/daydreamsai/skills-market",
+  "license": "MIT",
+  "keywords": [
+    "lucid",
+    "agents",
+    "editor",
+    "editing",
+    "update",
+    "authentication",
+    "wallet-auth",
+    "payment-signature",
+    "x402",
+    "claude-code"
+  ],
+  "skills": "./skills"
+}
